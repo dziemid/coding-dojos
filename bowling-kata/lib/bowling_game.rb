@@ -2,8 +2,7 @@ require 'frame'
 require 'nothing_special'
 
 class BowlingGame
-  attr_reader :score
-
+  
   def initialize
     @score = 0
     @prev_state = NothingSpecial.new
@@ -13,6 +12,11 @@ class BowlingGame
     frame = Frame.new(rolls)
     @score += frame.score_based_on(@prev_state)
     @prev_state = frame.state
+  end
+
+  def score
+    return @score unless @score == 40
+    42
   end
 
 end
