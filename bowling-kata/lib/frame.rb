@@ -8,7 +8,7 @@ class Frame
     @rolls = rolls
   end
 
-  def bonus(frames)
+  def bonus_based_on(frames)
 
     index = frames.find_index(self)
 
