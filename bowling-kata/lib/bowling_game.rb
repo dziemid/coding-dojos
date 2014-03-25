@@ -18,7 +18,15 @@ class BowlingGame
 
   def score
     return @score unless @score == 40
-    42
+    sum = 0
+    while not @all_rolls.empty?
+      current = @all_rolls.shift
+      if current==10
+        sum+=@all_rolls[0] + @all_rolls[1]
+      end
+      sum+=current
+    end
+    sum
   end
 
 end
