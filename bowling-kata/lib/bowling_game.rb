@@ -18,8 +18,11 @@ class BowlingGame
 
   def score
     sum = 0
-    while not @all_frames.empty?
-      current = @all_frames.shift
+    frames = @all_frames.take(10)
+
+    while not frames.empty?
+      current = frames.shift
+      @all_frames.shift
       if current.spare?
         sum+=@all_frames[0].first_roll
       end
