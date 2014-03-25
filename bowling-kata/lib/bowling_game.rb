@@ -13,16 +13,10 @@ class BowlingGame
   end
 
   def score
-    frames = @all_frames.take(10)
-
-    frames.map do |frame| 
-      frame.raw_score + bonus(frame, @all_frames)
+    @all_frames.take(10).map do |frame| 
+      frame.raw_score + frame.bonus(@all_frames)
     end.reduce(:+)
  
-  end
-
-  def bonus(current, frames)
-    current.bonus(frames)
   end
 
 end
