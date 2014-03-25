@@ -6,12 +6,12 @@ class BowlingGame
   def initialize
     @score = 0
     @prev_state = NothingSpecial.new
-    @all_rolls = []
+    @all_frames = []
   end
 
   def roll_frame rolls
-    @all_rolls += rolls
     frame = Frame.new(rolls)
+    @all_frames << frame
     @score += frame.score_based_on(@prev_state)
     @prev_state = frame.state
   end
@@ -19,12 +19,17 @@ class BowlingGame
   def score
     return @score unless @score == 40
     sum = 0
-    while not @all_rolls.empty?
-      current = @all_rolls.shift
-      if current==10
-        sum+=@all_rolls[0] + @all_rolls[1]
+    while not @all_frames.empty?
+      current = @all_frames.shift
+      if current.strike?
+        next_frame = @all_frames[0]
+        if next_frame.strike?
+          sum+=10+@all_frames[1].first_roll
+        else
+          sum+=next_frame.rolls.inject(:+)
+        end
       end
-      sum+=current
+      sum+=current.rolls.inject(:+)
     end
     sum
   end
