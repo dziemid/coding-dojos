@@ -19,12 +19,9 @@ end
 class StrikeBonus
 
   def based_on(frames)
-    return 0 if frames.empty?
-    if frames[0].strike?
-      return 10+frames[1].first_roll
-    else
-      return frames[0].rolls.inject(:+)
-    end
+    return 0                         if frames.empty?
+    return 10 + frames[1].first_roll if frames[0].strike?
+    frames[0].raw_score
   end
 
 end
