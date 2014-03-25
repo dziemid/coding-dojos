@@ -19,9 +19,11 @@ class BowlingGame
     while not frames.empty?
       current = frames.shift
       @all_frames.shift
+      
       if current.spare?
         sum+=@all_frames[0].first_roll
       end
+
       if current.strike?
         next_frame = @all_frames[0]
         if next_frame
@@ -32,9 +34,14 @@ class BowlingGame
           end
         end
       end
-      sum+=current.rolls.inject(:+)
+      sum+=bonus(current)
+      sum+=current.raw_score
     end
     sum
+  end
+
+  def bonus(current)
+    0
   end
 
 end
