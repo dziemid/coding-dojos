@@ -67,7 +67,6 @@ class Frame
     rolls[1]
   end
 
-  # private
   def strike?
     rolls[0] == 10
   end
