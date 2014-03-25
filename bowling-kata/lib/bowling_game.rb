@@ -3,7 +3,6 @@ require 'frame'
 class BowlingGame
   
   def initialize
-    @score = 0
     @all_frames = []
   end
 
