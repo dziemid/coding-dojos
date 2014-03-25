@@ -1,30 +1,72 @@
 require 'invalid_frame_exception'
 
+class Bonus
+  def self.for (frame)
+    return StrikeBonus.new if frame.strike?
+    return SpareBonus.new if frame.spare?
+    NoBonus.new
+  end
+end
+
+class NoBonus
+
+  def bonus_based_on(frames, index)
+    0
+  end
+
+end
+
+class StrikeBonus
+
+  def bonus_based_on(frames, index)
+    next_frame = frames[index+1]
+    if next_frame
+      if next_frame.strike?
+        return 10+frames[index+2].first_roll
+      else
+        return next_frame.rolls.inject(:+)
+      end
+    end
+    0
+  end
+
+end
+
+class SpareBonus
+
+  def bonus_based_on(frames, index)
+    frames[index].first_roll
+  end
+
+end
+
+
 class Frame
   attr_reader :rolls
 
   def initialize(rolls)
     raise InvalidFrameException if is_invalid?(rolls)
     @rolls = rolls
+    @bonus = Bonus.for(self)
   end
 
   def bonus_based_on(frames)
-
     index = frames.find_index(self)
-
     return frames[index+1].first_roll if spare?
 
     if strike?
         next_frame = frames[index+1]
-        if next_frame
-          if next_frame.strike?
-            return 10+frames[index+2].first_roll
-          else
-            return next_frame.rolls.inject(:+)
-          end
-        end
+         if next_frame
+           if next_frame.strike?
+             return 10+frames[index+2].first_roll
+           else
+             return next_frame.rolls.inject(:+)
+           end
+         end
       end
-    0
+
+    
+    @bonus.bonus_based_on(frames, index)
 
   end
   
