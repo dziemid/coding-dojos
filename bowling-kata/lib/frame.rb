@@ -54,17 +54,6 @@ class Frame
     index = frames.find_index(self)
     return frames[index+1].first_roll if spare?
 
-    if strike?
-        next_frame = frames[index+1]
-         if next_frame
-           if next_frame.strike?
-             return 10+frames[index+2].first_roll
-           else
-             return next_frame.rolls.inject(:+)
-           end
-         end
-      end
-
     
     @bonus.bonus_based_on(frames, index)
 
