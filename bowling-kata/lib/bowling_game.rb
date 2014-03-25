@@ -13,17 +13,13 @@ class BowlingGame
   end
 
   def score
-    sum = 0
     frames = @all_frames.take(10)
 
-    while not frames.empty?
-      current = frames.shift
+    frames.map do |frame| 
       @all_frames.shift
-
-      sum+=bonus(current, @all_frames)
-      sum+=current.raw_score
-    end
-    sum
+      frame.raw_score + bonus(frame, @all_frames)
+    end.reduce(:+)
+ 
   end
 
   def bonus(current, frames)
