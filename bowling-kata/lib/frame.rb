@@ -41,38 +41,38 @@ class Frame
   end
 
   class Bonus
-  def self.for (frame)
-    return StrikeBonus.new if frame.strike?
-    return SpareBonus.new if frame.spare?
-    NoBonus.new
-  end
-end
-
-class NoBonus
-
-  def based_on(frames)
-    0
+    def self.for (frame)
+      return StrikeBonus.new if frame.strike?
+      return SpareBonus.new if frame.spare?
+      NoBonus.new
+    end
   end
 
-end
+  class NoBonus
 
-class StrikeBonus
+    def based_on(frames)
+      0
+    end
 
-  def based_on(frames)
-    return 0                         if frames.empty?
-    return 10 + frames[1].first_roll if frames[0].strike?
-    frames[0].raw_score
   end
 
-end
+  class StrikeBonus
 
-class SpareBonus
+    def based_on(frames)
+      return 0                         if frames.empty?
+      return 10 + frames[1].first_roll if frames[0].strike?
+      frames[0].raw_score
+    end
 
-  def based_on(frames)
-    frames[0].first_roll
   end
 
-end
+  class SpareBonus
+
+    def based_on(frames)
+      frames[0].first_roll
+    end
+
+  end
 
 
 
