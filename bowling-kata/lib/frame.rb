@@ -10,7 +10,7 @@ end
 
 class NoBonus
 
-  def bonus_based_on(frames, index)
+  def bonus_based_on(frames)
     0
   end
 
@@ -18,11 +18,11 @@ end
 
 class StrikeBonus
 
-  def bonus_based_on(frames, index)
-    next_frame = frames[index+1]
+  def bonus_based_on(frames)
+    next_frame = frames[0]
     if next_frame
       if next_frame.strike?
-        return 10+frames[index+2].first_roll
+        return 10+frames[1].first_roll
       else
         return next_frame.rolls.inject(:+)
       end
@@ -34,8 +34,8 @@ end
 
 class SpareBonus
 
-  def bonus_based_on(frames, index)
-    frames[index+1].first_roll
+  def bonus_based_on(frames)
+    frames[0].first_roll
   end
 
 end
@@ -52,7 +52,7 @@ class Frame
 
   def bonus_based_on(frames)
     index = frames.find_index(self)
-    @bonus.bonus_based_on(frames, index)
+    @bonus.bonus_based_on(frames.drop(index+1))
   end
   
   def raw_score
