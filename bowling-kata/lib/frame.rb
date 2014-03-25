@@ -7,6 +7,23 @@ class Frame
     raise InvalidFrameException if is_invalid?(rolls)
     @rolls = rolls
   end
+
+  def bonus(frames)
+    return frames[0].first_roll if spare?
+
+    if strike?
+        next_frame = frames[0]
+        if next_frame
+          if next_frame.strike?
+            return 10+frames[1].first_roll
+          else
+            return next_frame.rolls.inject(:+)
+          end
+        end
+      end
+    0
+
+  end
   
   def raw_score
     rolls.reduce(:+)

@@ -27,20 +27,7 @@ class BowlingGame
   end
 
   def bonus(current, frames)
-    
-    return frames[0].first_roll if current.spare?
-
-    if current.strike?
-        next_frame = frames[0]
-        if next_frame
-          if next_frame.strike?
-            return 10+frames[1].first_roll
-          else
-            return next_frame.rolls.inject(:+)
-          end
-        end
-      end
-    0
+    current.bonus(frames)
   end
 
 end
