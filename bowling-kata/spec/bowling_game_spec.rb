@@ -91,6 +91,15 @@ describe BowlingGame, 'score' do
       expect(subject.score).to eq(300)
     end
 
+    it 'scores correctly 2 strikes in a row' do
+      subject.roll_frame [10]   # 22
+      subject.roll_frame [10]   # 15 
+      subject.roll_frame [2,3]  # 5
+      
+      expect(subject.score).to eq(42)
+    end
+
+
     # TODO: ideas on approach for the next session
     # -> small steps: get tests green with minimum red time
     # -> calc strike scores based on the next two rolls
