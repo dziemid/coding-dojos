@@ -1,40 +1,5 @@
 require 'invalid_frame_exception'
 
-class Bonus
-  def self.for (frame)
-    return StrikeBonus.new if frame.strike?
-    return SpareBonus.new if frame.spare?
-    NoBonus.new
-  end
-end
-
-class NoBonus
-
-  def based_on(frames)
-    0
-  end
-
-end
-
-class StrikeBonus
-
-  def based_on(frames)
-    return 0                         if frames.empty?
-    return 10 + frames[1].first_roll if frames[0].strike?
-    frames[0].raw_score
-  end
-
-end
-
-class SpareBonus
-
-  def based_on(frames)
-    frames[0].first_roll
-  end
-
-end
-
-
 class Frame
   attr_reader :rolls
 
@@ -74,6 +39,41 @@ class Frame
   def is_invalid?(rolls)
     rolls.empty? || (rolls.size == 1 && rolls.first != 10)
   end
+
+  class Bonus
+  def self.for (frame)
+    return StrikeBonus.new if frame.strike?
+    return SpareBonus.new if frame.spare?
+    NoBonus.new
+  end
+end
+
+class NoBonus
+
+  def based_on(frames)
+    0
+  end
+
+end
+
+class StrikeBonus
+
+  def based_on(frames)
+    return 0                         if frames.empty?
+    return 10 + frames[1].first_roll if frames[0].strike?
+    frames[0].raw_score
+  end
+
+end
+
+class SpareBonus
+
+  def based_on(frames)
+    frames[0].first_roll
+  end
+
+end
+
 
 
 end
