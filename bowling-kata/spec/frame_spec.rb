@@ -98,22 +98,6 @@ describe Frame do
       end
     end
 
-    context "valid cases" do
-
-      valid_cases = {
-          [10]   => [ Strike,         "returns strike for 10"],
-          [1, 2] => [ NothingSpecial, "returns nothing special for [1,2]"],
-          [5, 5] => [ Spare,          "returns spare for 5,5"]
-      }
-
-      valid_cases.each do |input, output|
-        it output[1] do
-          expect_frame_yeilds(input, output[0])
-        end
-      end
-
-    end
-
     def expect_frame_yeilds(rolls, state_class)
       expect(Frame.new(rolls).state.class).to eq(state_class)
     end

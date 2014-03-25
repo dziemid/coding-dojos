@@ -1,19 +1,15 @@
 require 'frame'
-require 'nothing_special'
 
 class BowlingGame
   
   def initialize
     @score = 0
-    @prev_state = NothingSpecial.new
     @all_frames = []
   end
 
   def roll_frame rolls
     frame = Frame.new(rolls)
     @all_frames << frame
-    @score += frame.score_based_on(@prev_state)
-    @prev_state = frame.state
   end
 
   def score
