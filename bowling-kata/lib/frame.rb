@@ -35,7 +35,7 @@ end
 class SpareBonus
 
   def bonus_based_on(frames, index)
-    frames[index].first_roll
+    frames[index+1].first_roll
   end
 
 end
@@ -52,11 +52,7 @@ class Frame
 
   def bonus_based_on(frames)
     index = frames.find_index(self)
-    return frames[index+1].first_roll if spare?
-
-    
     @bonus.bonus_based_on(frames, index)
-
   end
   
   def raw_score
