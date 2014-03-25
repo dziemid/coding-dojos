@@ -9,13 +9,16 @@ class Frame
   end
 
   def bonus(frames)
-    return frames[0].first_roll if spare?
+
+    index = frames.find_index(self)
+
+    return frames[index+1].first_roll if spare?
 
     if strike?
-        next_frame = frames[0]
+        next_frame = frames[index+1]
         if next_frame
           if next_frame.strike?
-            return 10+frames[1].first_roll
+            return 10+frames[index+2].first_roll
           else
             return next_frame.rolls.inject(:+)
           end
