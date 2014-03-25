@@ -20,9 +20,7 @@ class BowlingGame
       current = frames.shift
       @all_frames.shift
       
-      if current.spare?
-        sum+=@all_frames[0].first_roll
-      end
+      
 
       if current.strike?
         next_frame = @all_frames[0]
@@ -34,13 +32,16 @@ class BowlingGame
           end
         end
       end
-      sum+=bonus(current)
+      sum+=bonus(current, @all_frames)
       sum+=current.raw_score
     end
     sum
   end
 
-  def bonus(current)
+  def bonus(current, frames)
+    if current.spare?
+        return frames[0].first_roll
+    end
     0
   end
 
