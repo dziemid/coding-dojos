@@ -19,7 +19,7 @@ class BowlingGame
     while not frames.empty?
       current = frames.shift
       @all_frames.shift
-      
+
       sum+=bonus(current, @all_frames)
       sum+=current.raw_score
     end
@@ -27,9 +27,9 @@ class BowlingGame
   end
 
   def bonus(current, frames)
-    if current.spare?
-        return frames[0].first_roll
-    end
+    
+    return frames[0].first_roll if current.spare?
+
     if current.strike?
         next_frame = frames[0]
         if next_frame
